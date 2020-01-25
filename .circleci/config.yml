@@ -29,22 +29,22 @@ jobs:
       - run:
           name: Build & Deploy docker
           command: >
-            docker build -t boatzako/example-login-with-facbook:latest . && 
-            docker save boatzako/example-login-with-facbook:latest | bzip2 | ssh $SERVER_USER@$SERVER_HOSTNAME 'bunzip2 | docker load'
+            docker build -t boatzako/example-login-with-facebook:latest . && 
+            docker save boatzako/example-login-with-facebook:latest | bzip2 | ssh $SERVER_USER@$SERVER_HOSTNAME 'bunzip2 | docker load'
       - run:
           name: Remove old image in docker
           command: ssh $SERVER_USER@$SERVER_HOSTNAME "yes | docker image prune"
       - run:
           name: Restart container
           command: > 
-            ssh $SERVER_USER@$SERVER_HOSTNAME "docker stop example-login-with-facbook || true && 
+            ssh $SERVER_USER@$SERVER_HOSTNAME "docker stop example-login-with-facebook || true && 
             docker run --rm
-            --name example-login-with-facbook
+            --name example-login-with-facebook
+            -p $SERVER_PORT:3000
             -e PM2_PUBLIC_KEY=$PM2_PUBLIC_KEY
             -e PM2_SECRET_KEY=$PM2_SECRET_KEY
             -e HOSTNAME=$HOSTNAME
             -e FACEBOOK_CLIENT_ID=$FACEBOOK_CLIENT_ID
             -e FACEBOOK_CLIENT_SECRET=$FACEBOOK_CLIENT_SECRET
-            -p 3000:$SERVER_PORT
-            -d boatzako/example-login-with-facbook:latest"
+            -d boatzako/example-login-with-facebook:latest"
           
