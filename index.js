@@ -6,7 +6,7 @@ const app = express()
 
 app.use(morgan('common'))
 
-app.use('/api/auth', require('./auth/route'))
+app.use('/api/auth', require('./src/auth/route'))
 
 app.get('/', (req, res) => {
   res.send(200).send('OK')

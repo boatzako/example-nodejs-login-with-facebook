@@ -1,6 +1,6 @@
 const Strategy = require('passport-facebook').Strategy
-const fbConfig = require('../config/facebook')
-const serverConfig = require('../config/server')
+const fbConfig = require('../../config/facebook')
+const serverConfig = require('../../config/server')
 
 module.exports = new Strategy({
   clientID: fbConfig.clientID,
