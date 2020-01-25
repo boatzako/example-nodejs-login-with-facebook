@@ -1,0 +1,48 @@
+version: 2.1
+jobs:
+  build:
+    working_directory: ~/mern-starter
+    docker:
+      - image: circleci/node:12.9.1
+    steps:
+      - checkout
+      - run:
+          name: Update NPM
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install NPM
+          command: npm install --production
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules  
+      - add_ssh_keys:
+          fingerprints:
+            - "b5:89:0e:80:94:7f:26:35:cf:1c:45:a5:8f:3c:8d:44"
+      - run:
+          name: Trust the server
+          command: ssh-keyscan $SERVER_HOSTNAME >> ~/.ssh/known_hosts
+      - setup_remote_docker:
+          version: 18.09.3
+      - run:
+          name: Build & Deploy docker
+          command: >
+            docker build -t boatzako/example-login-with-facbook:latest . && 
+            docker save boatzako/example-login-with-facbook:latest | bzip2 | ssh $SERVER_USER@$SERVER_HOSTNAME 'bunzip2 | docker load'
+      - run:
+          name: Remove old image in docker
+          command: ssh $SERVER_USER@$SERVER_HOSTNAME "yes | docker image prune"
+      - run:
+          name: Restart container
+          command: > 
+            ssh $SERVER_USER@$SERVER_HOSTNAME "docker stop example-login-with-facbook || true && 
+            docker run --rm
+            --name example-login-with-facbook
+            -e PM2_PUBLIC_KEY=$PM2_PUBLIC_KEY
+            -e PM2_SECRET_KEY=$PM2_SECRET_KEY
+            -e HOSTNAME=$HOSTNAME
+            -p 8080:$SERVER_PORT
+            -d boatzako/example-login-with-facbook:latest"
+          
