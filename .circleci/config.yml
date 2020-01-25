@@ -43,6 +43,8 @@ jobs:
             -e PM2_PUBLIC_KEY=$PM2_PUBLIC_KEY
             -e PM2_SECRET_KEY=$PM2_SECRET_KEY
             -e HOSTNAME=$HOSTNAME
+            -e FACEBOOK_CLIENT_ID=$FACEBOOK_CLIENT_ID
+            -e FACEBOOK_CLIENT_SECRET=$FACEBOOK_CLIENT_SECRET
             -p 3000:$SERVER_PORT
             -d boatzako/example-login-with-facbook:latest"
           
