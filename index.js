@@ -20,5 +20,5 @@ app.get('**', (req, res) => {
 })
 
 app.listen(serverConfig.port, () => {
-  console.log(`App listening on port ${port}!`)
+  console.log(`App listening on port ${serverConfig.port}!`)
 })
