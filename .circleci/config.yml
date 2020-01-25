@@ -43,6 +43,6 @@ jobs:
             -e PM2_PUBLIC_KEY=$PM2_PUBLIC_KEY
             -e PM2_SECRET_KEY=$PM2_SECRET_KEY
             -e HOSTNAME=$HOSTNAME
-            -p 8080:$SERVER_PORT
+            -p 3000:$SERVER_PORT
             -d boatzako/example-login-with-facbook:latest"
           
