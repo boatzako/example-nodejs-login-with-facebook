@@ -1,0 +1,12 @@
+{
+  "name": "login-with-facebook",
+  "script": "index.js",
+  "cwd": "/app",
+  "instances": "1",
+  "env": {
+      "NODE_ENV": "development"
+  },
+  "env_production": {
+      "NODE_ENV": "production"
+  }
+}
