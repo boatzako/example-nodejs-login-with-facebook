@@ -3,6 +3,7 @@ const passport = require('passport')
 const facebookPassport = require('./facebook')
 const router = express.Router();
 
+passport.initialize()
 passport.use(facebookPassport)
 
 router.get('/facebook/signin', passport.authenticate('facebook'));
