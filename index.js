@@ -12,7 +12,7 @@ app.use('/api/auth', require('./src/auth/route'))
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', (req, res) => {
-  res.json(req.user)
+  res.json(req.user || {})
 })
 
 app.get('**', (req, res) => {

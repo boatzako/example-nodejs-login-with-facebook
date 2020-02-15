@@ -4,6 +4,14 @@ const facebookPassport = require('./facebook')
 const router = express.Router();
 
 passport.initialize()
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+passport.deserializeUser((user, done) => {
+  done(null, null);
+});
+
 passport.use(facebookPassport)
 
 router.get('/facebook/signin', passport.authenticate('facebook'));
