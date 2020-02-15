@@ -6,13 +6,14 @@ const app = express()
 
 app.use(morgan('common'))
 
-app.use('/', (req, res) => {
-  res.json(req.user)
-})
 
 app.use('/api/auth', require('./src/auth/route'))
 
 app.use(express.static(path.join(__dirname, 'public')))
+
+app.use('/', (req, res) => {
+  res.json(req.user)
+})
 
 app.get('**', (req, res) => {
   res.status(404)
