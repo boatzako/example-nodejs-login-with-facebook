@@ -3,11 +3,24 @@ const morgan = require('morgan')
 const express = require('express')
 const serverConfig = require('./config/server')
 const app = express()
+const passport = require('passport')
 
 app.use(morgan('common'))
+app.use(passport.initialize());
+app.use(passport.session());
 
+passport.serializeUser((user, done) => {
+  console.log('========== serializeUser ==========');
+  console.log(user);
+  done(null, user);
+});
+passport.deserializeUser((user, done) => {
+  console.log('========== deserializeUser ==========');
+  console.log(user);
+  done(null, user);
+});
 
-app.use('/api/auth', require('./src/auth/route'))
+app.use('/api/auth', require('./src/auth/route')(passport))
 
 app.use(express.static(path.join(__dirname, 'public')))
 
