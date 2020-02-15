@@ -6,10 +6,14 @@ const router = express.Router();
 passport.initialize()
 
 passport.serializeUser((user, done) => {
+  console.log('========== serializeUser ==========');
+  console.log(user);
   done(null, user);
 });
 passport.deserializeUser((user, done) => {
-  done(null, null);
+  console.log('========== deserializeUser ==========');
+  console.log(user);
+  done(null, user);
 });
 
 passport.use(facebookPassport)
