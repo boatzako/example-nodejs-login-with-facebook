@@ -9,7 +9,6 @@ module.exports = new Strategy({
 },
   function (accessToken, refreshToken, profile, cb) {
     try {
-      console.log(arguments);
       return cb(null, profile);
     } catch (error) {
       return cb(error, null);

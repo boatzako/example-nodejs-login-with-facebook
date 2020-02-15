@@ -6,17 +6,18 @@ const app = express()
 
 app.use(morgan('common'))
 
-app.use('/api/auth', require('./src/auth/route'))
-
-app.get('/', (req, res) => {
-  res.send(200).send('OK')
+app.use('/', (req, res) => {
+  res.json(req.user)
 })
+
+app.use('/api/auth', require('./src/auth/route'))
 
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('**', (req, res) => {
   res.status(404)
-  res.sendFile(path.join(__dirname, 'private/404.html'))
+  res.send('404 Page not found.')
+  // res.sendFile(path.join(__dirname, 'private/404.html'))
 })
 
 app.listen(serverConfig.port, () => {
