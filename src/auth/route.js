@@ -6,7 +6,7 @@ module.exports = (passport) => {
   passport.use(facebookPassport)
 
   router.get('/facebook/signin', passport.authenticate('facebook'));
-  router.get('/facebook/callback', passport.authenticate('facebook', {}), (req, res, next) => {
+  router.get('/facebook/callback', passport.authenticate('facebook', { session: true }), (req, res, next) => {
     try {
       console.log('======================================')
       console.log(req.user)
