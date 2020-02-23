@@ -6,6 +6,7 @@ module.exports = new Strategy({
   clientID: fbConfig.clientID,
   clientSecret: fbConfig.clientSecret,
   callbackURL: serverConfig.hostname + '/api/auth/facebook/callback',
+  enableProof: true,
 },
   function (accessToken, refreshToken, profile, cb) {
     try {
