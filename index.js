@@ -29,8 +29,8 @@ passport.deserializeUser((user, done) => {
 
 passport.use(facebookPassport)
 
-router.get('/api/auth/facebook/signin', passport.authenticate('facebook'));
-router.get('/api/auth/facebook/callback', function (req, res, next) {
+app.get('/api/auth/facebook/signin', passport.authenticate('facebook'));
+app.get('/api/auth/facebook/callback', function (req, res, next) {
   passport.authenticate('facebook', function (err, user, info) {
     console.log('===================== INFO')
     console.log(info)
