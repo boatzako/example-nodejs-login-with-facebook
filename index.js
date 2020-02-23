@@ -5,7 +5,7 @@ const serverConfig = require('./config/server')
 const app = express()
 const passport = require('passport')
 const session = require('express-session');
-const facebookPassport = require('./facebook')
+const facebookPassport = require('./src/auth/facebook')
 
 app.use(morgan('common'))
 app.use(session({
