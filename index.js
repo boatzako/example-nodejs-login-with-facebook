@@ -5,6 +5,7 @@ const serverConfig = require('./config/server')
 const app = express()
 const passport = require('passport')
 const session = require('express-session');
+const facebookPassport = require('./facebook')
 
 app.use(morgan('common'))
 app.use(session({
@@ -26,7 +27,31 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-app.use('/api/auth', require('./src/auth/route')(passport))
+passport.use(facebookPassport)
+
+router.get('/api/auth/facebook/signin', passport.authenticate('facebook'));
+router.get('/api/auth/facebook/callback', function (req, res, next) {
+  passport.authenticate('facebook', function (err, user, info) {
+    console.log('===================== INFO')
+    console.log(info)
+    if (err) {
+      console.log('===================== ERROR')
+      console.log(err)
+      return res.send(err);
+    }
+    if (!user) {
+      console.log('===================== USER')
+      return res.redirect('/login');
+    }
+    req.logIn(user, function (err) {
+      if (err) {
+        console.log('===================== LOGIN')
+        return res.send(err);
+      }
+      return res.redirect('/');
+    })
+  })(req, res, next)
+})
 
 app.use(express.static(path.join(__dirname, 'public')))
 
