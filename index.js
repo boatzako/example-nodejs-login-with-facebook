@@ -30,28 +30,10 @@ passport.deserializeUser((user, done) => {
 passport.use(facebookPassport)
 
 app.get('/api/auth/facebook/signin', passport.authenticate('facebook'));
-app.get('/api/auth/facebook/callback', function (req, res, next) {
-  passport.authenticate('facebook', function (err, user, info) {
-    console.log('===================== INFO')
-    console.log(info)
-    if (err) {
-      console.log('===================== ERROR')
-      console.log(err)
-      return res.send(err);
-    }
-    if (!user) {
-      console.log('===================== USER')
-      return res.redirect('/login');
-    }
-    req.logIn(user, function (err) {
-      if (err) {
-        console.log('===================== LOGIN')
-        return res.send(err);
-      }
-      return res.redirect('/');
-    })
-  })(req, res, next)
-})
+app.get('/api/auth/facebook/callback', passport.authenticate('facebook', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+}))
 
 app.use(express.static(path.join(__dirname, 'public')))
 
