@@ -27,13 +27,7 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-passport.use(facebookPassport)
-
-app.get('/api/auth/facebook/signin', passport.authenticate('facebook'));
-app.get('/api/auth/facebook/callback', passport.authenticate('facebook', {
-  successRedirect: '/',
-  failureRedirect: '/login'
-}))
+app.use('/api/auth', require('./src/auth/route')(passport))
 
 app.use(express.static(path.join(__dirname, 'public')))
 
