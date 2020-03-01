@@ -14,11 +14,8 @@ module.exports = (passport) => {
       if (!user) {
         return res.redirect('/login');
       }
-      console.log('===================== USER')
-      console.log(user)
       req.logIn(user, function (err) {
         if (err) {
-          console.log('===================== LOGIN')
           return res.send(err);
         }
         return res.redirect('/');
