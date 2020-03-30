@@ -4,14 +4,14 @@ const express = require('express')
 const serverConfig = require('./config/server')
 const app = express()
 const passport = require('passport')
-// const session = require('express-session');
+const session = require('express-session');
 
 app.use(morgan('common'))
-// app.use(session({
-//   secret: 'mysecret',
-//   saveUninitialized: true,
-//   resave: true,
-// }));
+app.use(session({
+  secret: 'mysecret',
+  saveUninitialized: true,
+  resave: true,
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
