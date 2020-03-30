@@ -22,7 +22,7 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-app.use('/api/auth', require('./src/auth/route')(passport))
+app.use('/api/auth', require('./src/auth/route'))
 
 app.use(express.static(path.join(__dirname, 'public')))
 
@@ -33,7 +33,6 @@ app.use('/', (req, res) => {
 app.get('**', (req, res) => {
   res.status(404)
   res.send('404 Page not found.')
-  // res.sendFile(path.join(__dirname, 'private/404.html'))
 })
 
 app.listen(serverConfig.port, () => {
