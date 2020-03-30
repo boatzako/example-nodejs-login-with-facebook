@@ -10,15 +10,17 @@ app.use(morgan('common'))
 app.use(session({
   secret: 'mysecret',
   saveUninitialized: true,
-  resave: true
+  resave: true,
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser((user, done) => {
+  console.log('test serializeUser')
   done(null, user);
 });
 passport.deserializeUser((user, done) => {
+  console.log('test deserializeUser')
   done(null, user);
 });
 
