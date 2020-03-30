@@ -1,9 +1,8 @@
 const express = require('express')
 const facebookPassport = require('./facebook')
 const passport = require('passport')
-
-// module.exports = (passport) => {
 const router = express.Router();
+
 passport.use(facebookPassport)
 
 router.get('/facebook/signin', passport.authenticate('facebook'));
@@ -23,8 +22,5 @@ router.get('/facebook/callback', function (req, res, next) {
     })
   })(req, res, next)
 });
-
-//   return router
-// }
 
 module.exports = router
