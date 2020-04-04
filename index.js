@@ -1,4 +1,3 @@
-const path = require('path')
 const morgan = require('morgan')
 const express = require('express')
 const serverConfig = require('./config/server')
@@ -22,17 +21,14 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-app.use('/api/auth', require('./src/auth/route'))
-
-app.use(express.static(path.join(__dirname, 'public')))
+app.use('/api/auth', require('./src/auth/router'))
 
 app.use('/', (req, res) => {
   res.json(req.user || {})
 })
 
 app.get('**', (req, res) => {
-  res.status(404)
-  res.send('404 Page not found.')
+  res.status(404).send('404 Page not found.')
 })
 
 app.listen(serverConfig.port, () => {
